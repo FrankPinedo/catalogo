@@ -36,15 +36,25 @@ function parsePrice(text: string): number | null {
 function PriceCell({
   id,
   precio,
+  categoria,
+  producto,
+  material = '',
   isRecargo = false,
   colorClass = '',
   onEdit,
 }: {
-  id: string
+  id?: string
   precio: number | null
+  categoria?: string
+  producto?: string
+  material?: string
   isRecargo?: boolean
   colorClass?: string
-  onEdit: (id: string, newPrecio: number | null) => void
+  onEdit: (
+    identifier: string,
+    newPrecio: number | null,
+    meta?: { categoria?: string; producto?: string; material?: string }
+  ) => void
 }) {
   const [isEditing, setIsEditing] = useState(false)
   const [val, setVal] = useState(precio !== null ? String(precio) : '')
@@ -61,18 +71,17 @@ function PriceCell({
     }
   }, [isEditing])
 
-  if (precio === null) {
-    return <span className="text-slate-300 select-none font-normal">—</span>
-  }
-
   const handleCommit = () => {
     setIsEditing(false)
     const parsed = parsePrice(val)
     if (parsed !== precio) {
-      onEdit(id, parsed)
+      const cellId = id || `new_${producto}||${material}`
+      onEdit(cellId, parsed, { categoria, producto, material })
     }
     if (parsed !== null) {
       setVal(String(parsed))
+    } else {
+      setVal('')
     }
   }
 
@@ -82,6 +91,7 @@ function PriceCell({
         ref={inputRef}
         type="number"
         step="any"
+        placeholder="0.00"
         value={val}
         onChange={(e) => setVal(e.target.value)}
         onBlur={handleCommit}
@@ -97,13 +107,17 @@ function PriceCell({
     )
   }
 
+  const hasValue = precio !== null && precio !== undefined
+
   return (
     <span
       onClick={() => setIsEditing(true)}
-      title="Clic para editar precio"
-      className={`price-editable ${colorClass} cursor-pointer hover:bg-yellow-200 hover:ring-2 hover:ring-amber-400 transition-all select-none`}
+      title="Clic para editar o ingresar precio"
+      className={`price-editable ${colorClass} ${
+        !hasValue ? 'text-slate-400 font-normal italic hover:text-slate-800' : ''
+      } cursor-pointer hover:bg-yellow-200 hover:ring-2 hover:ring-amber-400 transition-all select-none`}
     >
-      {fmt(parsePrice(val) ?? precio, isRecargo)}
+      {hasValue ? fmt(parsePrice(val) ?? precio, isRecargo) : '—'}
     </span>
   )
 }
@@ -175,11 +189,14 @@ function TablaMonofocales({
           const precio = cat[producto]?.[mat] ?? null
           return (
             <td key={mat} className="p-2.5 text-center">
-              {id ? (
-                <PriceCell id={id} precio={precio} onEdit={onEdit} />
-              ) : (
-                <span className="text-slate-300">—</span>
-              )}
+              <PriceCell
+                id={id}
+                precio={precio}
+                categoria="monofocales"
+                producto={producto}
+                material={mat}
+                onEdit={onEdit}
+              />
             </td>
           )
         })}
@@ -294,7 +311,14 @@ function TablaBifocales({
                       const precio = cat[producto]?.[mat] ?? null
                       return (
                         <td key={mat} className="p-2.5 text-center">
-                          {id ? <PriceCell id={id} precio={precio} onEdit={onEdit} /> : <span className="text-slate-300">—</span>}
+                          <PriceCell
+                            id={id}
+                            precio={precio}
+                            categoria="bifocales"
+                            producto={producto}
+                            material={mat}
+                            onEdit={onEdit}
+                          />
                         </td>
                       )
                     })}
@@ -420,13 +444,15 @@ function TablaMultifocales({
                       const precio = cat[producto]?.[mat] ?? null
                       return (
                         <td key={mat} className="p-2.5 text-center">
-                          {id ? (
-                            <PriceCell id={id} precio={precio} onEdit={onEdit}
-                              colorClass={mat === 'policarbonato' ? 'text-[#5e35b1] bg-[#ede7f6]' : ''}
-                            />
-                          ) : (
-                            <span className="text-slate-300">—</span>
-                          )}
+                          <PriceCell
+                            id={id}
+                            precio={precio}
+                            categoria="multifocales"
+                            producto={producto}
+                            material={mat}
+                            onEdit={onEdit}
+                            colorClass={mat === 'policarbonato' ? 'text-[#5e35b1] bg-[#ede7f6]' : ''}
+                          />
                         </td>
                       )
                     })}
@@ -494,13 +520,16 @@ function TablaFabricacion({
                       const precio = cat[producto]?.[mat] ?? null
                       return (
                         <td key={mat} className="p-2.5 text-center">
-                          {id ? (
-                            <PriceCell id={id} precio={precio} isRecargo onEdit={onEdit}
-                              colorClass={mat === 'esf_cil_2_25_4' ? 'text-[#00796b] bg-green-50' : 'text-emerald-800 bg-emerald-100'}
-                            />
-                          ) : (
-                            <span className="text-slate-300">—</span>
-                          )}
+                          <PriceCell
+                            id={id}
+                            precio={precio}
+                            categoria="fabricacion"
+                            producto={producto}
+                            material={mat}
+                            isRecargo
+                            onEdit={onEdit}
+                            colorClass={mat === 'esf_cil_2_25_4' ? 'text-[#00796b] bg-green-50' : 'text-emerald-800 bg-emerald-100'}
+                          />
                         </td>
                       )
                     })}
@@ -601,7 +630,13 @@ function TablaDescartables({
                       )}
                     </td>
                     <td className="p-2.5 text-center">
-                      {id ? <PriceCell id={id} precio={precio} onEdit={onEdit} /> : <span className="text-slate-300">—</span>}
+                      <PriceCell
+                        id={id}
+                        precio={precio}
+                        categoria="descartables"
+                        producto={p.nombre}
+                        onEdit={onEdit}
+                      />
                     </td>
                     <td className="p-3 pl-6 text-xs text-slate-600">{p.detalle}</td>
                     <td className="p-2.5 text-center">
@@ -763,7 +798,13 @@ function TablaAnuales({
                       )}
                     </td>
                     <td className="p-2.5 text-center">
-                      {id ? <PriceCell id={id} precio={precio} onEdit={onEdit} /> : <span className="text-slate-300">—</span>}
+                      <PriceCell
+                        id={id}
+                        precio={precio}
+                        categoria="anuales"
+                        producto={item.nombre}
+                        onEdit={onEdit}
+                      />
                     </td>
                     <td className="p-3 pl-6 text-xs text-slate-600">{item.detalle}</td>
                     <td className="p-2.5 text-center">
@@ -912,13 +953,14 @@ function TablaServicios({
                         <p className="text-slate-500 mt-0.5">{item.desc}</p>
                       </div>
                       <div className="flex items-center gap-3">
-                        {precio === 0 ? (
-                          <span className="badge-stock text-xs">GRATIS</span>
-                        ) : id ? (
-                          <PriceCell id={id} precio={precio} onEdit={onEdit} colorClass="text-[#0097a7] bg-teal-50 text-sm" />
-                        ) : (
-                          <span className="text-slate-300">—</span>
-                        )}
+                        <PriceCell
+                          id={id}
+                          precio={precio}
+                          categoria="servicios"
+                          producto={item.nombre}
+                          onEdit={onEdit}
+                          colorClass="text-[#0097a7] bg-teal-50 text-sm"
+                        />
                       </div>
                     </div>
                   )
@@ -938,6 +980,9 @@ export default function CatalogoPage() {
   const [priceMap, setPriceMap] = useState<PriceMap>({})
   const [idMap, setIdMap] = useState<Record<string, string>>({})
   const [pendingChanges, setPendingChanges] = useState<Map<string, number | null>>(new Map())
+  const [pendingMeta, setPendingMeta] = useState<
+    Map<string, { categoria?: string; producto?: string; material?: string }>
+  >(new Map())
   const [saving, setSaving] = useState(false)
   const [toastMsg, setToastMsg] = useState('')
   const [toastVisible, setToastVisible] = useState(false)
@@ -980,31 +1025,59 @@ export default function CatalogoPage() {
   }, [])
 
   // Registra un cambio pendiente y actualiza la visualización
-  const handleEdit = useCallback((id: string, precio: number | null) => {
-    setPendingChanges((prev) => {
-      const next = new Map(prev)
-      next.set(id, precio)
-      return next
-    })
+  const handleEdit = useCallback(
+    (
+      id: string,
+      precio: number | null,
+      meta?: { categoria?: string; producto?: string; material?: string }
+    ) => {
+      setPendingChanges((prev) => {
+        const next = new Map(prev)
+        next.set(id, precio)
+        return next
+      })
 
-    // Actualizar también en el estado local de priceMap
-    setPriceMap((prev) => {
-      const next = { ...prev }
-      for (const cat in next) {
-        for (const prod in next[cat]) {
-          for (const mat in next[cat][prod]) {
-            if (idMap[`${prod}||${mat}`] === id) {
-              next[cat][prod][mat] = precio
-              return { ...next }
+      if (meta && meta.producto) {
+        setPendingMeta((prev) => {
+          const next = new Map(prev)
+          next.set(id, meta)
+          return next
+        })
+
+        // Actualizar directamente en priceMap usando la metadata del producto
+        const cat = meta.categoria || 'monofocales'
+        const prod = meta.producto
+        const mat = meta.material || ''
+
+        setPriceMap((prev) => {
+          const next = { ...prev }
+          if (!next[cat]) next[cat] = {}
+          if (!next[cat][prod]) next[cat][prod] = {}
+          next[cat][prod][mat] = precio
+          return { ...next }
+        })
+      } else {
+        // Buscar por id existente
+        setPriceMap((prev) => {
+          const next = { ...prev }
+          for (const cat in next) {
+            for (const prod in next[cat]) {
+              for (const mat in next[cat][prod]) {
+                if (idMap[`${prod}||${mat}`] === id) {
+                  next[cat][prod][mat] = precio
+                  return { ...next }
+                }
+              }
             }
           }
-        }
+          return next
+        })
       }
-      return next
-    })
-  }, [idMap])
+    },
+    [idMap]
+  )
 
-  // Guarda todos los cambios pendientes — UPDATE directo sin historial
+  // Guarda todos los cambios pendientes — UPDATE / INSERT directo sin historial
   const saveAllChanges = useCallback(async () => {
     if (pendingChanges.size === 0) {
       showToast('No hay cambios pendientes que guardar.')
@@ -1012,7 +1085,17 @@ export default function CatalogoPage() {
     }
     setSaving(true)
     try {
-      const updates = Array.from(pendingChanges.entries()).map(([id, precio]) => ({ id, precio }))
+      const updates = Array.from(pendingChanges.entries()).map(([id, precio]) => {
+        const meta = pendingMeta.get(id)
+        return {
+          id,
+          precio,
+          categoria: meta?.categoria,
+          producto: meta?.producto,
+          material: meta?.material,
+        }
+      })
+
       const res = await fetch('/api/precios', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1027,13 +1110,27 @@ export default function CatalogoPage() {
       } else {
         showToast(`✅ ${result.success} precio(s) guardados correctamente en Supabase.`)
         setPendingChanges(new Map())
+        setPendingMeta(new Map())
+
+        // Actualizar idMap si se insertaron registros nuevos
+        if (result.results && Array.isArray(result.results)) {
+          setIdMap((prev) => {
+            const next = { ...prev }
+            result.results.forEach((r: { key?: string; id?: string }) => {
+              if (r.key && r.id) {
+                next[r.key] = r.id
+              }
+            })
+            return next
+          })
+        }
       }
     } catch (err) {
       showToast('❌ Error de conexión al guardar.')
     } finally {
       setSaving(false)
     }
-  }, [pendingChanges, showToast])
+  }, [pendingChanges, pendingMeta, showToast])
 
   // Exportar a PDF la tabla activa
   const exportToPdf = useCallback(async () => {

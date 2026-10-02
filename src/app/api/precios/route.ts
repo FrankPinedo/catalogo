@@ -30,24 +30,56 @@ export async function GET(request: Request) {
   }
 }
 
-// POST /api/precios — Actualiza precios en lote (UPDATE directo, sin historial)
+// POST /api/precios — Actualiza o inserta precios (Soporta IDs existentes o nuevos)
 export async function POST(request: Request) {
   try {
     const supabase = getSupabase()
     const body = await request.json()
-    const updates: { id: string; precio: number | null }[] = body.updates
+    const updates: {
+      id?: string
+      categoria?: string
+      producto?: string
+      material?: string
+      precio: number | null
+    }[] = body.updates
 
     if (!Array.isArray(updates) || updates.length === 0) {
       return NextResponse.json({ error: 'No se recibieron actualizaciones' }, { status: 400 })
     }
 
     const results = await Promise.all(
-      updates.map(async ({ id, precio }) => {
-        const { error } = await supabase
-          .from('catalog_prices')
-          .update({ precio: precio ?? null })
-          .eq('id', id)
-        return { id, ok: !error, error: error?.message }
+      updates.map(async (item) => {
+        // Si tiene id existente, hace UPDATE directo
+        if (item.id && !item.id.startsWith('new_')) {
+          const { error } = await supabase
+            .from('catalog_prices')
+            .update({ precio: item.precio ?? null })
+            .eq('id', item.id)
+          return { id: item.id, ok: !error, error: error?.message }
+        }
+
+        // Si es una celda que no existía antes en BD, hace INSERT / UPSERT
+        if (item.categoria && item.producto) {
+          const { data, error } = await supabase
+            .from('catalog_prices')
+            .insert({
+              categoria: item.categoria,
+              producto: item.producto,
+              material: item.material || '',
+              precio: item.precio ?? null,
+            })
+            .select('id')
+            .single()
+
+          return {
+            id: data?.id || item.id,
+            key: `${item.producto}||${item.material || ''}`,
+            ok: !error,
+            error: error?.message,
+          }
+        }
+
+        return { id: item.id, ok: false, error: 'Identificador insuficiente' }
       })
     )
 
@@ -58,6 +90,7 @@ export async function POST(request: Request) {
       message: `${successCount} precio(s) actualizados, ${failCount} error(es)`,
       success: successCount,
       errors: failCount,
+      results,
     })
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Error interno del servidor'
