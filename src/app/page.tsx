@@ -1,16 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState, useCallback } from 'react'
-import { createClient } from '@supabase/supabase-js'
 import type { CatalogPrice } from '@/lib/supabase'
-
-// Cliente Supabase para el lado del navegador (solo se instancia una vez)
-function getBrowserSupabase() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL ?? ''
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''
-  if (!url || !key) return null
-  return createClient(url, key)
-}
 
 // ─── Tipos ────────────────────────────────────────────────
 type PriceMap = Record<string, Record<string, Record<string, number | null>>>
@@ -55,50 +46,64 @@ function PriceCell({
   colorClass?: string
   onEdit: (id: string, newPrecio: number | null) => void
 }) {
-  const spanRef = useRef<HTMLSpanElement>(null)
+  const [isEditing, setIsEditing] = useState(false)
+  const [val, setVal] = useState(precio !== null ? String(precio) : '')
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    setVal(precio !== null ? String(precio) : '')
+  }, [precio])
+
+  useEffect(() => {
+    if (isEditing && inputRef.current) {
+      inputRef.current.focus()
+      inputRef.current.select()
+    }
+  }, [isEditing])
 
   if (precio === null) {
-    return <span className="text-slate-300 select-none">—</span>
+    return <span className="text-slate-300 select-none font-normal">—</span>
   }
 
-  const handleBlur = () => {
-    const text = spanRef.current?.textContent ?? ''
-    const parsed = parsePrice(text)
-    onEdit(id, parsed)
-    if (spanRef.current) {
-      spanRef.current.textContent = fmt(parsed, isRecargo)
+  const handleCommit = () => {
+    setIsEditing(false)
+    const parsed = parsePrice(val)
+    if (parsed !== precio) {
+      onEdit(id, parsed)
+    }
+    if (parsed !== null) {
+      setVal(String(parsed))
     }
   }
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      e.preventDefault()
-      spanRef.current?.blur()
-    }
-    if (e.key === 'Escape') {
-      if (spanRef.current) {
-        spanRef.current.textContent = fmt(precio, isRecargo)
-      }
-      spanRef.current?.blur()
-    }
-    // Solo permitir números, punto, backspace, flechas
-    const allowed = /^[0-9.]$/.test(e.key)
-    const control = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter', 'Escape'].includes(e.key)
-    if (!allowed && !control) {
-      e.preventDefault()
-    }
+  if (isEditing) {
+    return (
+      <input
+        ref={inputRef}
+        type="number"
+        step="any"
+        value={val}
+        onChange={(e) => setVal(e.target.value)}
+        onBlur={handleCommit}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') handleCommit()
+          if (e.key === 'Escape') {
+            setVal(precio !== null ? String(precio) : '')
+            setIsEditing(false)
+          }
+        }}
+        className="w-20 px-2 py-1 text-center font-bold text-xs bg-amber-100 border-2 border-teal-600 rounded shadow-inner outline-none text-slate-800"
+      />
+    )
   }
 
   return (
     <span
-      ref={spanRef}
-      className={`price-editable ${colorClass}`}
-      contentEditable
-      suppressContentEditableWarning
-      onBlur={handleBlur}
-      onKeyDown={handleKeyDown}
+      onClick={() => setIsEditing(true)}
+      title="Clic para editar precio"
+      className={`price-editable ${colorClass} cursor-pointer hover:bg-yellow-200 hover:ring-2 hover:ring-amber-400 transition-all select-none`}
     >
-      {fmt(precio, isRecargo)}
+      {fmt(parsePrice(val) ?? precio, isRecargo)}
     </span>
   )
 }
@@ -773,19 +778,14 @@ export default function CatalogoPage() {
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
 
-  // Carga inicial desde Supabase (directo en navegador, sin fetch relativo)
+  // Carga inicial a través de la API local (segura, usa Supabase en el servidor)
   useEffect(() => {
     async function load() {
       try {
-        const supabase = getBrowserSupabase()
-        if (!supabase) {
-          showToast('⚠️ Configura NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANON_KEY en .env.local')
-          setLoading(false)
-          return
-        }
-        const { data, error } = await supabase.from('catalog_prices').select('*').order('id')
-        if (error) throw new Error(error.message)
-        const typedData = (data ?? []) as CatalogPrice[]
+        const res = await fetch('/api/precios')
+        if (!res.ok) throw new Error('Error en respuesta del servidor')
+        const typedData = (await res.json()) as CatalogPrice[]
+
         const pm: PriceMap = {}
         const im: Record<string, string> = {}
         typedData.forEach((row) => {
@@ -798,7 +798,7 @@ export default function CatalogoPage() {
         setIdMap(im)
       } catch (err) {
         console.error(err)
-        showToast('⚠️ Error al cargar los precios. Verifica la conexión con Supabase.')
+        showToast('⚠️ Error al cargar los precios desde el servidor.')
       } finally {
         setLoading(false)
       }
@@ -813,14 +813,30 @@ export default function CatalogoPage() {
     setTimeout(() => setToastVisible(false), 3500)
   }, [])
 
-  // Registra un cambio pendiente
+  // Registra un cambio pendiente y actualiza la visualización
   const handleEdit = useCallback((id: string, precio: number | null) => {
     setPendingChanges((prev) => {
       const next = new Map(prev)
       next.set(id, precio)
       return next
     })
-  }, [])
+
+    // Actualizar también en el estado local de priceMap
+    setPriceMap((prev) => {
+      const next = { ...prev }
+      for (const cat in next) {
+        for (const prod in next[cat]) {
+          for (const mat in next[cat][prod]) {
+            if (idMap[`${prod}||${mat}`] === id) {
+              next[cat][prod][mat] = precio
+              return { ...next }
+            }
+          }
+        }
+      }
+      return next
+    })
+  }, [idMap])
 
   // Guarda todos los cambios pendientes — UPDATE directo sin historial
   const saveAllChanges = useCallback(async () => {
@@ -830,27 +846,20 @@ export default function CatalogoPage() {
     }
     setSaving(true)
     try {
-      const supabase = getBrowserSupabase()
-      if (!supabase) {
-        showToast('❌ Supabase no configurado.')
-        return
-      }
       const updates = Array.from(pendingChanges.entries()).map(([id, precio]) => ({ id, precio }))
-      const results = await Promise.all(
-        updates.map(async ({ id, precio }) => {
-          const { error } = await supabase
-            .from('catalog_prices')
-            .update({ precio: precio ?? null })
-            .eq('id', id)
-          return { id, ok: !error }
-        })
-      )
-      const successCount = results.filter((r) => r.ok).length
-      const failCount = results.filter((r) => !r.ok).length
-      if (failCount > 0) {
-        showToast(`⚠️ ${successCount} guardados, ${failCount} con error.`)
+      const res = await fetch('/api/precios', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ updates }),
+      })
+
+      if (!res.ok) throw new Error('Error al guardar en el servidor')
+      const result = await res.json()
+
+      if (result.errors > 0) {
+        showToast(`⚠️ ${result.success} guardados, ${result.errors} con error.`)
       } else {
-        showToast(`✅ ${successCount} precio(s) guardados correctamente.`)
+        showToast(`✅ ${result.success} precio(s) guardados correctamente en Supabase.`)
         setPendingChanges(new Map())
       }
     } catch (err) {
