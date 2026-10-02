@@ -994,8 +994,11 @@ export default function CatalogoPage() {
     async function load() {
       try {
         const res = await fetch('/api/precios')
-        if (!res.ok) throw new Error('Error en respuesta del servidor')
-        const typedData = (await res.json()) as CatalogPrice[]
+        const data = await res.json()
+        if (!res.ok) {
+          throw new Error(data?.error || `Error ${res.status}: Fallo al conectar con el servidor`)
+        }
+        const typedData = (data ?? []) as CatalogPrice[]
 
         const pm: PriceMap = {}
         const im: Record<string, string> = {}
@@ -1007,9 +1010,10 @@ export default function CatalogoPage() {
         })
         setPriceMap(pm)
         setIdMap(im)
-      } catch (err) {
+      } catch (err: unknown) {
         console.error(err)
-        showToast('⚠️ Error al cargar los precios desde el servidor.')
+        const msg = err instanceof Error ? err.message : 'Error desconocido'
+        showToast(`⚠️ No se cargaron precios: ${msg}`)
       } finally {
         setLoading(false)
       }
@@ -1102,8 +1106,10 @@ export default function CatalogoPage() {
         body: JSON.stringify({ updates }),
       })
 
-      if (!res.ok) throw new Error('Error al guardar en el servidor')
       const result = await res.json()
+      if (!res.ok) {
+        throw new Error(result?.error || `Error ${res.status} al guardar en el servidor`)
+      }
 
       if (result.errors > 0) {
         showToast(`⚠️ ${result.success} guardados, ${result.errors} con error.`)
@@ -1125,8 +1131,9 @@ export default function CatalogoPage() {
           })
         }
       }
-    } catch (err) {
-      showToast('❌ Error de conexión al guardar.')
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Error desconocido'
+      showToast(`❌ Error al guardar: ${msg}`)
     } finally {
       setSaving(false)
     }
