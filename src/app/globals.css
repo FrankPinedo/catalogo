@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-teal: #0097a7;
+  --brand-dark-teal: #00838f;
+  --brand-light-teal: #e0f7fa;
+  --brand-green: #00796b;
+  --brand-purple: #5e35b1;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f4f7f6;
+}
+
+/* ─── Precio editable ───────────────────────────────── */
+.price-editable {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.375rem;
+  font-weight: 700;
+  user-select: text;
+  min-width: 4rem;
+}
+
+.price-editable:hover {
+  background-color: #fef08a !important;
+  color: #854d0e !important;
+  transform: scale(1.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.price-editable:focus {
+  outline: 2px solid var(--brand-teal);
+  background-color: #fef9c3 !important;
+  color: #713f12 !important;
+}
+
+.price-editable[data-modified="true"] {
+  outline: 2px solid #f59e0b;
+}
+
+/* ─── Texto editable ─────────────────────────────────── */
+.text-editable {
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  border-radius: 0.25rem;
+  padding: 0.1rem 0.3rem;
+}
+
+.text-editable:hover {
+  background-color: #fef9c3;
+}
+
+.text-editable:focus {
+  outline: 2px solid var(--brand-teal);
+  background-color: #fef9c3;
+}
+
+/* ─── Badges ──────────────────────────────────────────── */
+.badge-stock {
+  background-color: #e6f4ea;
+  color: #137333;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.65rem;
+}
+
+.badge-wait {
+  background-color: #fce8e6;
+  color: #c5221f;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.65rem;
+}
+
+/* ─── Tabs ────────────────────────────────────────────── */
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* ─── Toast ───────────────────────────────────────────── */
+.toast-visible {
+  opacity: 1 !important;
+}
+
+/* ─── Print / Export ──────────────────────────────────── */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #print-area,
+  #print-area * {
+    visibility: visible;
+  }
+  #print-area {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    z-index: 9999;
+  }
+  /* Ocultar elementos de UI */
+  .no-print {
+    display: none !important;
+  }
+  /* Ajuste A4 */
+  @page {
+    size: A4 landscape;
+    margin: 10mm 8mm;
+  }
+  table {
+    font-size: 9pt;
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 1px solid #ccc;
+    padding: 4px 6px;
+  }
+  .price-editable {
+    background: none !important;
+    color: inherit !important;
+    font-weight: bold;
+  }
+}
