@@ -617,19 +617,105 @@ function TablaDescartables({
             </tbody>
           </table>
         </div>
+
+        {/* PALETA DE COLORES COSMÉTICOS SEGÚN DISEÑO STITCH */}
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 mt-6">
+          <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider mb-5 flex items-center gap-2">
+            <i className="fa-solid fa-palette text-[#0097a7]" /> Catálogo Visual de Tonos y Colores Cosméticos
+          </h3>
+          <div className="space-y-6">
+            <div>
+              <div className="flex items-center space-x-2 mb-3">
+                <span className="w-3 h-3 rounded-full bg-gradient-to-r from-amber-500 to-emerald-500" />
+                <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider">Colores Vibrantes</h4>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div className="flex flex-col items-center p-3 rounded-xl bg-slate-50 border border-slate-100">
+                  <div className="w-12 h-12 rounded-full border-2 border-white shadow-md bg-gradient-to-br from-amber-600 via-yellow-700 to-amber-900 mb-2 relative flex items-center justify-center">
+                    <div className="w-4 h-4 rounded-full bg-black" />
+                  </div>
+                  <span className="text-xs font-semibold text-slate-800">Miel</span>
+                </div>
+                <div className="flex flex-col items-center p-3 rounded-xl bg-slate-50 border border-slate-100">
+                  <div className="w-12 h-12 rounded-full border-2 border-white shadow-md bg-gradient-to-br from-emerald-500 via-green-600 to-teal-800 mb-2 relative flex items-center justify-center">
+                    <div className="w-4 h-4 rounded-full bg-black" />
+                  </div>
+                  <span className="text-xs font-semibold text-slate-800">Verde Esmeralda</span>
+                </div>
+                <div className="flex flex-col items-center p-3 rounded-xl bg-slate-50 border border-slate-100">
+                  <div className="w-12 h-12 rounded-full border-2 border-white shadow-md bg-gradient-to-br from-slate-400 via-gray-600 to-slate-800 mb-2 relative flex items-center justify-center">
+                    <div className="w-4 h-4 rounded-full bg-black" />
+                  </div>
+                  <span className="text-xs font-semibold text-slate-800">Gris Intenso</span>
+                </div>
+                <div className="flex flex-col items-center p-3 rounded-xl bg-slate-50 border border-slate-100">
+                  <div className="w-12 h-12 rounded-full border-2 border-white shadow-md bg-gradient-to-br from-cyan-400 via-blue-600 to-indigo-800 mb-2 relative flex items-center justify-center">
+                    <div className="w-4 h-4 rounded-full bg-black" />
+                  </div>
+                  <span className="text-xs font-semibold text-slate-800">Azul Brillante</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center space-x-2 mb-3">
+                <span className="w-3 h-3 rounded-full bg-gradient-to-r from-stone-400 to-sky-400" />
+                <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider">Colores Sutiles</h4>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                <div className="flex flex-col items-center p-3 rounded-xl bg-slate-50 border border-slate-100">
+                  <div className="w-10 h-10 rounded-full border-2 border-white shadow bg-gradient-to-br from-amber-700 to-stone-900 mb-2 flex items-center justify-center">
+                    <div className="w-3.5 h-3.5 rounded-full bg-black" />
+                  </div>
+                  <span className="text-xs font-medium text-slate-800">Café</span>
+                </div>
+                <div className="flex flex-col items-center p-3 rounded-xl bg-slate-50 border border-slate-100">
+                  <div className="w-10 h-10 rounded-full border-2 border-white shadow bg-gradient-to-br from-sky-400 to-slate-700 mb-2 flex items-center justify-center">
+                    <div className="w-3.5 h-3.5 rounded-full bg-black" />
+                  </div>
+                  <span className="text-xs font-medium text-slate-800">Azul</span>
+                </div>
+                <div className="flex flex-col items-center p-3 rounded-xl bg-slate-50 border border-slate-100">
+                  <div className="w-10 h-10 rounded-full border-2 border-white shadow bg-gradient-to-br from-emerald-400 to-stone-700 mb-2 flex items-center justify-center">
+                    <div className="w-3.5 h-3.5 rounded-full bg-black" />
+                  </div>
+                  <span className="text-xs font-medium text-slate-800">Verde</span>
+                </div>
+                <div className="flex flex-col items-center p-3 rounded-xl bg-slate-50 border border-slate-100">
+                  <div className="w-10 h-10 rounded-full border-2 border-white shadow bg-gradient-to-br from-amber-400 to-amber-700 mb-2 flex items-center justify-center">
+                    <div className="w-3.5 h-3.5 rounded-full bg-black" />
+                  </div>
+                  <span className="text-xs font-medium text-slate-800">Pure Hazel</span>
+                </div>
+                <div className="flex flex-col items-center p-3 rounded-xl bg-slate-50 border border-slate-100">
+                  <div className="w-10 h-10 rounded-full border-2 border-white shadow bg-gradient-to-br from-slate-300 to-slate-600 mb-2 flex items-center justify-center">
+                    <div className="w-3.5 h-3.5 rounded-full bg-black" />
+                  </div>
+                  <span className="text-xs font-medium text-slate-800">Gris</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   )
 }
 
 // ─── Anuales ──────────────────────────────────────────────
-const ANUAL_PRODUCTS = [
-  'ANUAL ESFÉRICO (MIOPIA/HIPERMETROPIA)',
-  'ANUAL ASTIGMATISMO (TORICO)',
-  'ANUAL MULTIFOCAL',
-  'ANUAL COLOR ESFÉRICO',
-  'ANUAL SILICONA HIDROGEL ESFÉRICO',
-  'ANUAL SILICONA HIDROGEL TORICO',
+const ANUAL_PRODUCTS_FULL = [
+  { nombre: 'OPTIMA 38', detalle: 'Medidas de +5.00 a -12.00 • Blíster uno por unidad', entrega: '4d HÁBILES' },
+  { nombre: 'LICRIL PERMANENTE', detalle: 'Medidas de Plano a -20.00 • Blíster uno por unidad', entrega: '4d HÁBILES' },
+  { nombre: 'LICRIL 55XL', detalle: 'Medidas de +20.00 a -20.00 • Blíster uno por unidad', entrega: '4d HÁBILES' },
+  { nombre: 'LICRIL TORIC I', detalle: 'ESF. +2.00 a -5.00 CIL. HASTA -2.75 • Blíster por 1 unidad', entrega: '7d HÁBILES' },
+  { nombre: 'LICRIL TORIC II', detalle: 'ESF. +2.25 a +5.00 / -5.25 a -10.00 CIL. HASTA -4.00', entrega: '7d HÁBILES' },
+  { nombre: 'LICRIL TORIC III', detalle: 'ESF. +5.25 a +20.00 / -10.25 a -20.00 CIL. HASTA -8.00', entrega: '7d HÁBILES' },
+  { nombre: 'LUNA PUPILA NEGRA', detalle: 'Lente especial cosmético protésico / iris oclusión', entrega: '4d HÁBILES' },
+  { nombre: 'ANUAL ESFÉRICO (MIOPIA/HIPERMETROPIA)', detalle: 'Par de lentes de contacto anuales estándar', entrega: '4d HÁBILES' },
+  { nombre: 'ANUAL ASTIGMATISMO (TORICO)', detalle: 'Par de lentes de contacto anual tórico', entrega: '7d HÁBILES' },
+  { nombre: 'ANUAL MULTIFOCAL', detalle: 'Par de lentes de contacto anual multifocal', entrega: '7d HÁBILES' },
+  { nombre: 'ANUAL COLOR ESFÉRICO', detalle: 'Par de lentes cosméticos graduados', entrega: '4d HÁBILES' },
+  { nombre: 'ANUAL SILICONA HIDROGEL ESFÉRICO', detalle: 'Alta oxigenación para uso prolongado', entrega: '7d HÁBILES' },
+  { nombre: 'ANUAL SILICONA HIDROGEL TORICO', detalle: 'Silicona hidrogel para astigmatismo', entrega: '7d HÁBILES' },
 ]
 
 function TablaAnuales({
@@ -644,38 +730,44 @@ function TablaAnuales({
   const cat = prices['anuales'] ?? {}
 
   return (
-    <section id="tab-anuales" className="tab-content">
+    <section id="tab-anuales" className="space-y-6">
       <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
         <div className="bg-gradient-to-r from-[#0097a7] to-teal-700 px-6 py-4 text-white flex items-center justify-between">
           <h2 className="text-lg font-bold flex items-center gap-2">
             <span className="bg-white/20 p-1.5 rounded-lg"><i className="fa-solid fa-calendar-check" /></span>
-            LENTES DE CONTACTO ANUALES
+            LENTES DE CONTACTO DE REEMPLAZO ANUAL
           </h2>
-          <span className="text-xs bg-white/10 px-3 py-1.5 rounded-lg border border-white/20">Reemplazo Programado</span>
+          <span className="text-xs bg-white/10 px-3 py-1.5 rounded-lg border border-white/20">Frascos y Blísters Unitarios</span>
         </div>
         <div className="overflow-x-auto" id="print-area-anuales">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
               <tr className="text-center font-bold text-white uppercase tracking-wider text-[11px]">
-                <th className="p-3.5 bg-[#00838f] text-left">Tipo de Lente Anual</th>
-                <th className="p-3 bg-[#0097a7] w-40">Precio (par)</th>
+                <th className="p-3.5 bg-[#00838f] text-left w-72">Producto / Marca</th>
+                <th className="p-3 bg-[#0097a7] w-36">Precio</th>
+                <th className="p-3 bg-[#00796b] text-left pl-6">Características</th>
+                <th className="p-3 bg-[#5e35b1] w-44">Tiempo de Entrega</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 text-slate-700">
-              {ANUAL_PRODUCTS.map((producto, idx) => {
-                const key = `${producto}||`
+              {ANUAL_PRODUCTS_FULL.map((item, idx) => {
+                const key = `${item.nombre}||`
                 const id = idMap[key]
-                const precio = cat[producto]?.[''] ?? null
+                const precio = cat[item.nombre]?.[''] ?? null
                 return (
-                  <tr key={producto} className={`${idx % 2 !== 0 ? 'bg-slate-50/50 hover:bg-slate-100' : 'hover:bg-slate-50'} transition`}>
-                    <td className="p-3 font-semibold text-xs">
-                      <span className="text-[#00838f] font-bold">{producto.split(' (')[0]}</span>
-                      {producto.includes('(') && (
-                        <span className="text-slate-500 font-normal"> ({producto.split('(')[1].replace(')', '')})</span>
+                  <tr key={item.nombre} className={`${idx % 2 !== 0 ? 'bg-slate-50/50 hover:bg-slate-100' : 'hover:bg-slate-50'} transition`}>
+                    <td className="p-3.5 font-bold text-slate-800 text-xs">
+                      {item.nombre.split(' (')[0]}
+                      {item.nombre.includes('(') && (
+                        <span className="text-[11px] block font-normal text-slate-500">({item.nombre.split('(')[1].replace(')', '')})</span>
                       )}
                     </td>
                     <td className="p-2.5 text-center">
                       {id ? <PriceCell id={id} precio={precio} onEdit={onEdit} /> : <span className="text-slate-300">—</span>}
+                    </td>
+                    <td className="p-3 pl-6 text-xs text-slate-600">{item.detalle}</td>
+                    <td className="p-2.5 text-center">
+                      <span className="text-xs font-semibold text-teal-700">{item.entrega}</span>
                     </td>
                   </tr>
                 )
@@ -684,27 +776,94 @@ function TablaAnuales({
           </table>
         </div>
       </div>
+
+      {/* ESCALA DE TONOS OCULARES A1/5 A A8/45 DE STITCH */}
+      <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+        <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4 flex items-center gap-2">
+          <i className="fa-solid fa-eye-dropper text-[#0097a7]" /> Escala de Tonos Oculares (A1/5 a A8/45)
+        </h3>
+        <div className="grid grid-cols-4 sm:grid-cols-8 gap-3 text-center">
+          {[
+            { tag: 'A1/5', color: '#d7b594' },
+            { tag: 'A2/10', color: '#bf926b' },
+            { tag: 'A3/15', color: '#ab7a51' },
+            { tag: 'A4/20', color: '#8f5d38' },
+            { tag: 'A5/25', color: '#6a3f23' },
+            { tag: 'A6/35', color: '#543019' },
+            { tag: 'A7/40', color: '#402312' },
+            { tag: 'A8/45', color: '#2c170a' },
+          ].map((t) => (
+            <div key={t.tag} className="p-2 bg-slate-50 rounded-xl border border-slate-100">
+              <div
+                className="w-10 h-10 mx-auto rounded-full border-2 border-white shadow flex items-center justify-center mb-1"
+                style={{ backgroundColor: t.color }}
+              >
+                <div className="w-4 h-4 rounded-full bg-black" />
+              </div>
+              <span className="text-[11px] font-bold text-slate-700">{t.tag}</span>
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
   )
 }
 
 // ─── Servicios ─────────────────────────────────────────────
-const SERV_PRODUCTS = [
-  { nombre: 'EXAMEN DE VISTA COMPLETO', nota: 'Sin costo adicional' },
-  { nombre: 'ADAPTACIÓN DE LENTES DE CONTACTO', nota: 'Con compra de LC' },
-  { nombre: 'TOPOGRAFÍA CORNEAL', nota: '' },
-  { nombre: 'REPARACIÓN DE ARMAZÓN (SOLDADURA)', nota: '' },
-  { nombre: 'AJUSTE Y TEMPLADO DE ARMAZÓN', nota: '' },
-  { nombre: 'CAMBIO DE PATILLA', nota: '' },
-  { nombre: 'CAMBIO DE NOSE PADS (PAR)', nota: '' },
-  { nombre: 'PULIDO DE LENTES RAYADOS', nota: '' },
-  { nombre: 'LÍQUIDO LIMPIADOR DE LENTES (120ml)', nota: '' },
-  { nombre: 'ESTUCHE PARA LENTES', nota: '' },
-  { nombre: 'CORREA ANTIDESLIZANTE', nota: '' },
-  { nombre: 'PAÑO DE MICROFIBRA', nota: '' },
-  { nombre: 'KIT REPARACIÓN DE TORNILLOS', nota: '' },
-  { nombre: 'SOLUCIÓN PARA LC MENSUAL (120ml)', nota: '' },
-  { nombre: 'ESTUCHE PARA LC', nota: '' },
+const SERV_SECTIONS = [
+  {
+    titulo: 'Servicios de Reparación y Montaje',
+    icon: 'fa-wrench',
+    items: [
+      { nombre: 'SOLDADURA DE MONTURA (METAL)', desc: 'Reparación de puente o bisagras metálicas con soldadura de alta resistencia.' },
+      { nombre: 'ADAPTACIÓN DE LUNAS MARCO CERRADO', desc: 'Corte y montaje de lunas en montura nueva (+S/ 10 para material policarbonato).' },
+      { nombre: 'ADAPTACIÓN DE LUNAS MARCO SEMI AL AIRE', desc: 'Corte, ranurado y montaje en montura nueva (+S/ 10 para policarbonato).' },
+      { nombre: 'MEDIDA DE VISTA COMPLETA', desc: 'Examen visual computarizado y refracción clínica completa por optometrista.' },
+      { nombre: 'EXAMEN DE VISTA COMPLETO', desc: 'Examen preventivo de agudeza visual sin costo adicional.' },
+      { nombre: 'ADAPTACIÓN DE LENTES DE CONTACTO', desc: 'Prueba y adaptación clínica con compra de lentes.' },
+      { nombre: 'TOPOGRAFÍA CORNEAL', desc: 'Mapeo corneal computarizado para casos especiales.' },
+      { nombre: 'AJUSTE Y TEMPLADO DE ARMAZÓN', desc: 'Nivelación de varillas, terminales y centrado ergonómico.' },
+      { nombre: 'PULIDO DE LENTES RAYADOS', desc: 'Tratamiento de pulido superficial para remoción de micro-rayas.' },
+    ],
+  },
+  {
+    titulo: 'Repuestos y Mantenimiento',
+    icon: 'fa-toolbox',
+    items: [
+      { nombre: 'CAMBIO DE PLAQUETAS (PAR) - PLÁSTICO', desc: 'Almohadillas para la nariz en material plástico de ajuste estándar.' },
+      { nombre: 'CAMBIO DE PLAQUETAS (PAR) - SILICONA', desc: 'Almohadillas hipoalergénicas para la nariz en material de silicona suave.' },
+      { nombre: 'CAMBIO DE NOSE PADS (PAR)', desc: 'Plaquetas nasales de repuesto con tornillo o presión.' },
+      { nombre: 'CAMBIO DE TORNILLOS (C/U)', desc: 'Reemplazo de tornillos para brazo, charnela o plaqueta.' },
+      { nombre: 'CAMBIO DE PATILLA', desc: 'Reemplazo o adaptación de varilla completa compatible.' },
+      { nombre: 'CAMBIO DE TERMINALES (PAR)', desc: 'Cambio de terminales de brazo o patitas protectoras para lentes.' },
+      { nombre: 'KIT REPARACIÓN DE TORNILLOS', desc: 'Estuche portátil de destornillador y surtido de tornillos.' },
+    ],
+  },
+  {
+    titulo: 'Accesorios, Estuches y Limpieza',
+    icon: 'fa-bag-shopping',
+    items: [
+      { nombre: 'COLGADORES BÁSICOS', desc: 'Cordón sencillo de tela o nylon resistente.' },
+      { nombre: 'COLGADORES CON DISEÑO', desc: 'Cordón tipo cadena, perlas decorativas y estilos modernos.' },
+      { nombre: 'COLGADORES DE GOMA', desc: 'Cordón de goma elástica deportiva regulable.' },
+      { nombre: 'CORREA ANTIDESLIZANTE', desc: 'Sujetador elástico de seguridad para deporte o niños.' },
+      { nombre: 'PAÑOS MICROFIBRA', desc: 'Paño especial de alta densidad para limpieza sin rayaduras.' },
+      { nombre: 'PAÑO DE MICROFIBRA', desc: 'Paño de limpieza suave para lunas con tratamiento antireflejo.' },
+      { nombre: 'FUNDA DE TELA PARA SOLAR', desc: 'Bolsa de microfibra ligera para evitar rayones en lentes de sol.' },
+      { nombre: 'ESTUCHE DURO SOLAR', desc: 'Protector rígido y amplio para lentes de sol grandes.' },
+      { nombre: 'ESTUCHE OFTALMICO TIPO SOBRE', desc: 'Protector delgado y plano de ecocuero, ideal para bolsillos.' },
+      { nombre: 'ESTUCHE PARA LENTES', desc: 'Estuche rígido estándar con bisagra para anteojos ópticos.' },
+      { nombre: 'TOPES DE SILICONA', desc: 'Sujetadores antideslizantes para las varillas tras la oreja.' },
+      { nombre: 'PARCHES OCULARES', desc: 'Protectores para terapias visuales o postoperatorios.' },
+      { nombre: 'ESTUCHE DE LENTES DE CONTACTO', desc: 'Portalentes hermético para guardado y desinfección segura.' },
+      { nombre: 'ESTUCHE PARA LC', desc: 'Estuche portalentes compacto para lentes de contacto.' },
+      { nombre: 'PINZA PARA LENTES DE CONTACTO', desc: 'Herramienta de silicona suave para manipulación higiénica.' },
+      { nombre: 'LÍQUIDO LIMPIADOR DE LUNAS (20 ML / 60 ML)', desc: 'Spray limpiador antiempañante para todo tipo de lunas y antireflejo.' },
+      { nombre: 'LÍQUIDO LIMPIADOR DE LENTES (120ml)', desc: 'Spray limpiador formulado para lunas antireflejo y policarbonato.' },
+      { nombre: 'SOLUCIÓN MULTIPROPÓSITO LENTES DE CONTACTO (60 ML / 100 ML / 150 ML)', desc: 'Solución estéril desinfectante, limpiadora y humectante.' },
+      { nombre: 'SOLUCIÓN PARA LC MENSUAL (120ml)', desc: 'Líquido para conservación y enjuague de lentes blandos.' },
+    ],
+  },
 ]
 
 function TablaServicios({
@@ -719,47 +878,54 @@ function TablaServicios({
   const cat = prices['servicios'] ?? {}
 
   return (
-    <section id="tab-servicios" className="tab-content">
+    <section id="tab-servicios" className="space-y-6">
       <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
         <div className="bg-gradient-to-r from-[#0097a7] to-teal-700 px-6 py-4 text-white flex items-center justify-between">
-          <h2 className="text-lg font-bold flex items-center gap-2">
-            <span className="bg-white/20 p-1.5 rounded-lg"><i className="fa-solid fa-screwdriver-wrench" /></span>
-            SERVICIOS & ACCESORIOS
-          </h2>
-          <span className="text-xs bg-white/10 px-3 py-1.5 rounded-lg border border-white/20">Servicios ópticos especializados</span>
+          <div>
+            <h2 className="text-lg font-bold flex items-center gap-2">
+              <span className="bg-white/20 p-1.5 rounded-lg"><i className="fa-solid fa-screwdriver-wrench" /></span>
+              SERVICIOS DE TALLER ÓPTICO Y ACCESORIOS
+            </h2>
+            <p className="text-xs text-teal-100">Listado adaptado a lectura vertical optimizada</p>
+          </div>
+          <span className="text-xs bg-white/10 px-3 py-1.5 rounded-lg border border-white/20">Tarifario de Taller</span>
         </div>
-        <div className="overflow-x-auto" id="print-area-servicios">
-          <table className="w-full text-left text-xs border-collapse">
-            <thead>
-              <tr className="text-center font-bold text-white uppercase tracking-wider text-[11px]">
-                <th className="p-3.5 bg-[#00838f] text-left">Servicio / Accesorio</th>
-                <th className="p-3 bg-[#0097a7] w-40">Precio</th>
-                <th className="p-3 bg-[#00796b] text-left w-48">Nota</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 text-slate-700">
-              {SERV_PRODUCTS.map((p, idx) => {
-                const key = `${p.nombre}||`
-                const id = idMap[key]
-                const precio = cat[p.nombre]?.[''] ?? null
-                return (
-                  <tr key={p.nombre} className={`${idx % 2 !== 0 ? 'bg-slate-50/50 hover:bg-slate-100' : 'hover:bg-slate-50'} transition`}>
-                    <td className="p-3 font-semibold text-xs text-slate-800">{p.nombre}</td>
-                    <td className="p-2.5 text-center">
-                      {precio === 0 ? (
-                        <span className="badge-stock text-xs">GRATIS</span>
-                      ) : id ? (
-                        <PriceCell id={id} precio={precio} onEdit={onEdit} />
-                      ) : (
-                        <span className="text-slate-300">—</span>
-                      )}
-                    </td>
-                    <td className="p-3 text-xs text-slate-500 italic">{p.nota}</td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
+
+        <div className="divide-y divide-slate-100 text-slate-700 text-xs" id="print-area-servicios">
+          {SERV_SECTIONS.map((sec) => (
+            <div key={sec.titulo}>
+              <div className="bg-teal-50/60 px-6 py-2.5 font-bold text-[#00838f] uppercase tracking-wider text-[11px] flex items-center gap-2">
+                <i className={`fa-solid ${sec.icon}`} /> {sec.titulo}
+              </div>
+              <div className="divide-y divide-slate-100">
+                {sec.items.map((item) => {
+                  const key = `${item.nombre}||`
+                  const id = idMap[key]
+                  const precio = cat[item.nombre]?.[''] ?? null
+                  return (
+                    <div
+                      key={item.nombre}
+                      className="p-4 sm:px-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 hover:bg-slate-50 transition"
+                    >
+                      <div className="max-w-xl">
+                        <h4 className="font-bold text-slate-800 text-sm">{item.nombre}</h4>
+                        <p className="text-slate-500 mt-0.5">{item.desc}</p>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        {precio === 0 ? (
+                          <span className="badge-stock text-xs">GRATIS</span>
+                        ) : id ? (
+                          <PriceCell id={id} precio={precio} onEdit={onEdit} colorClass="text-[#0097a7] bg-teal-50 text-sm" />
+                        ) : (
+                          <span className="text-slate-300">—</span>
+                        )}
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
