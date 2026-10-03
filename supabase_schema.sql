@@ -348,8 +348,8 @@ ON CONFLICT DO NOTHING;
 -- 9. Lentes de Contacto Descartables
 -- ----------------------------------------------------------------
 INSERT INTO public.catalog_prices (categoria, producto, material, precio) VALUES
-('descartables','AIR OPTIX COLOR S/M (SOLO MIOPIA O HIPERMETROPIA)','',120),
-('descartables','AIR OPTIX COLOR C/M (SOLO MIOPIA O HIPERMETROPIA)','',129),
+('descartables','AIR OPTIX COLOR SIN MEDIDA','',120),
+('descartables','AIR OPTIX COLOR CON MEDIDA (SOLO MIOPIA O HIPERMETROPIA)','',129),
 ('descartables','ESFÉRICOS (SOLO MIOPIA O HIPERMETROPIA)','',149),
 ('descartables','SILICONA (SOLO MIOPIA O HIPERMETROPIA)','',200),
 ('descartables','SOF LENS ASTIGMATISMO','',320),

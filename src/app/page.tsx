@@ -576,9 +576,9 @@ function TablaFabricacion({
 
 // ─── Descartables ─────────────────────────────────────────
 const DESC_PRODUCTS = [
-  { nombre: 'AIR OPTIX COLOR S/M (SOLO MIOPIA O HIPERMETROPIA)', detalle: 'Medidas de +6.00 a -9.00 • Caja por 6 unidades', entrega: 'STOCK' },
-  { nombre: 'AIR OPTIX COLOR C/M (SOLO MIOPIA O HIPERMETROPIA)', detalle: 'Estuche y líquido a partir de dos cajas', entrega: 'STOCK' },
-  { nombre: 'ESFÉRICOS (SOLO MIOPIA O HIPERMETROPIA)', detalle: 'Medidas desde +4.00 hasta -8.00 (Estuche y líquido a partir de 2 cajas)', entrega: '7d HÁBILES' },
+  { nombre: 'AIR OPTIX COLOR SIN MEDIDA', detalle: 'Colores: Pure Hazel, Azul, Café, Gris, Verde, Miel, Verde Esmeralda, Gris Intenso, Azul Brillante', entrega: 'STOCK' },
+  { nombre: 'AIR OPTIX COLOR CON MEDIDA (SOLO MIOPIA O HIPERMETROPIA)', detalle: 'Medidas de +6.00 a -8.00 por caja de 6 unidades', entrega: 'STOCK' },
+  { nombre: 'ESFÉRICOS (SOLO MIOPIA O HIPERMETROPIA)', detalle: 'Medidas desde +6.00 hasta -9.00 (Estuche y líquido a partir de 2 cajas)', entrega: '7d HÁBILES' },
   { nombre: 'SILICONA (SOLO MIOPIA O HIPERMETROPIA)', detalle: 'Medidas de +8.00 a -12.00 • Caja por 6 unidades', entrega: 'STOCK' },
   { nombre: 'SOF LENS ASTIGMATISMO', detalle: 'Medidas de +6.00 a -9.00 CIL -0.75; -1.25; -1.75; -2.25; -2.75 Eje 10 a 180 pasos de 10', entrega: '30d HÁBILES' },
   { nombre: 'PURE VISION ASTIGMATISMO', detalle: 'Medidas de +6.00 a -9.00 CIL -0.75; -1.25; -1.75; -2.25 Eje 10 a 180 pasos de 10', entrega: '30d HÁBILES' },
