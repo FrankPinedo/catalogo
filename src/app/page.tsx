@@ -365,24 +365,24 @@ function TablaBifocales({
 
 // ─── Tabla Multifocales ───────────────────────────────────
 const MULTI_PRODUCTS = [
-  'OVER VIEW UV (TRANSPARENTE)',
-  'ALFA VIEW UV (TRANSPARENTE)',
-  'ALFA PREMIUM UV (TRANSPARENTE)',
-  'OVER VIEW AR (UV + AR VERDE)',
-  'ALFA VIEW AR (UV + AR VERDE)',
-  'ALFA PREMIUM AR (UV + AR VERDE)',
-  'OVER VIEW BLUE DEFENSE (LUZ AZUL)',
-  'ALFA VIEW BLUE DEFENSE (LUZ AZUL)',
-  'ALFA PREMIUM BLUE DEFENSE (LUZ AZUL)',
-  'OVER VIEW FOTOCROMATICO UV (GRIS O MARRON)',
-  'ALFA VIEW FOTOCROMATICO UV (GRIS O MARRON)',
-  'ALFA PREMIUM FOTOCROMATICO UV',
-  'OVER VIEW FOTOCROMATICO AR',
-  'ALFA VIEW FOTOCROMATICO AR',
-  'ALFA PREMIUM FOTOCROMATICO AR',
-  'OVER VIEW FOTOCROMATICO BLUE AR',
-  'ALFA VIEW FOTOCROMATICO BLUE AR',
-  'ALFA PREMIUM FOTOCROMATICO BLUE AR',
+  'NEXT UV (TRANSPARENTE)',
+  'AMPLITUD UV (TRANSPARENTE)',
+  'DYNAMIC UV (TRANSPARENTE)',
+  'NEXT AR (UV + AR VERDE)',
+  'AMPLITUD AR (UV + AR VERDE)',
+  'DYNAMIC AR (UV + AR VERDE)',
+  'NEXT BLUE DEFENSE (LUZ AZUL)',
+  'AMPLITUD BLUE DEFENSE (LUZ AZUL)',
+  'DYNAMIC BLUE DEFENSE (LUZ AZUL)',
+  'NEXT FOTOCROMATICO AR',
+  'AMPLITUD FOTOCROMATICO AR',
+  'DYNAMIC FOTOCROMATICO AR',
+  'NEXT FOTOCROMATICO BLUE AR',
+  'AMPLITUD FOTOCROMATICO BLUE AR',
+  'DYNAMIC FOTOCROMATICO BLUE AR',
+  'NEXT TRANSITION',
+  'AMPLITUD TRANSITION',
+  'DYNAMIC TRANSITION',
 ]
 const MULTI_MATERIALS = ['resina', 'policarbonato', 'ai_1_67', 'ai_1_74']
 const MULTI_HEADERS = ['Resina', 'Policarbonato', 'AI 1.67', 'AI 1.74']
@@ -399,9 +399,9 @@ function TablaMultifocales({
   const cat = prices['multifocales'] ?? {}
 
   const getProductLabel = (p: string) => {
-    if (p.startsWith('OVER VIEW')) return { prefix: 'OVER VIEW', color: 'text-[#00838f]' }
-    if (p.startsWith('ALFA VIEW')) return { prefix: 'ALFA VIEW', color: 'text-[#0097a7]' }
-    return { prefix: 'ALFA PREMIUM', color: 'text-[#5e35b1]' }
+    if (p.startsWith('NEXT')) return { prefix: 'NEXT', color: 'text-[#00838f]' }
+    if (p.startsWith('AMPLITUD')) return { prefix: 'AMPLITUD', color: 'text-[#0097a7]' }
+    return { prefix: 'DYNAMIC', color: 'text-[#5e35b1]' }
   }
 
   return (
@@ -413,7 +413,7 @@ function TablaMultifocales({
               <span className="bg-white/20 p-1.5 rounded-lg"><i className="fa-solid fa-arrows-split-up-and-left" /></span>
               TARIFARIO LENTES MULTIFOCALES (PROGRESIVOS)
             </h2>
-            <p className="text-xs text-teal-100">Gamas Over View, Alfa View y Alfa Premium</p>
+            <p className="text-xs text-teal-100">Gamas Next, Amplitud y Dynamic</p>
           </div>
           <span className="text-xs bg-white/10 px-3 py-1.5 rounded-lg border border-white/20">Visión Cerca, Intermedia y Lejos</span>
         </div>
